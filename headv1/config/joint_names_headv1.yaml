@@ -1,0 +1,1 @@
+controller_joint_names: ['base_to_mid', 'mid_to_servo', 'servo_to_kinect', ]
