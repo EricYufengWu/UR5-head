@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="head">
+
+<xacro:property name="base_pos" value="0.2" />
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/base.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="${base_pos} 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/base.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="0.2 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="-0.0022" ixy="-0.8696" ixz="-0.4937" iyy="0.4937" iyz="-0.8696" izz="-0.0079"/>
+    </inertial>
+  </link>
+
+  <link name="mid">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/mid2.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="0.03 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/mid2.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="0.03 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0296" ixy="-0.9249" ixz="0.3790" iyy="-0.0270" iyz="0.0121" izz="-0.9253"/>
+    </inertial>
+  </link>
+
+  <joint name="base_to_mid" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+    <parent link="base_link"/>
+    <child link="mid"/>
+    <origin xyz="0 0 0.5"/>
+  </joint>
+
+  <link name="servo">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/servo.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="-0.11 0 -0.135"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/servo.dae"/>
+      </geometry>
+      <origin rpy="0 0 1.57075" xyz="-0.11 0 -0.135"/>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.9915" ixy="0.0694" ixz="-0.1104" iyy="-0.9423" iyz="0.3189" izz="-0.9413"/>
+    </inertial>
+  </link>
+
+  <joint name="mid_to_servo" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="-0.61" upper="2" velocity="1"/>  
+    <parent link="mid"/>
+    <child link='servo'/>
+    <origin xyz="0 0 0.5"/>
+  </joint>
+
+  <link name="kinect">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/kinect.dae"/>
+      </geometry>
+      <origin rpy="1.57075 0 1.57075" xyz="-0.11 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://urdf_tutorial/meshes/kinect.dae"/>
+      </geometry>
+      <origin rpy="1.57075 0 1.57075" xyz="-0.11 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="-0.0012" ixy="-0.0008" ixz="1" iyy="0.0081" iyz="-0.0012" izz="0.0008"/>
+    </inertial>
+  </link>
+
+  <joint name="servo_to_kinect" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-1.57075" upper="1.57075" velocity="1"/>
+    <parent link="servo"/>
+    <child link='kinect'/>
+    <origin xyz="0.4 0 0.3"/>
+  </joint>
+
+</robot>
