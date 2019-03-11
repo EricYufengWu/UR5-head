@@ -1,2 +1,2 @@
 # UR5-head
-URDF packages of a rbot head for a UR5 arm system
+URDF packages of a robot head for a UR5 arm system
